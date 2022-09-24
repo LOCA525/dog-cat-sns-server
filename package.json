@@ -1,5 +1,5 @@
 {
-  "name": "yeonstargram-server",
+  "name": "dog-cat-sns-server",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bdabin/yeonstargram-server.git"
+    "url": "git+https://github.com/bdabin/dog-cat-sns-server.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bdabin/yeonstargram-server/issues"
+    "url": "https://github.com/bdabin/dog-cat-sns-server/issues"
   },
-  "homepage": "https://github.com/bdabin/yeonstargram-server#readme",
+  "homepage": "https://github.com/bdabin/dog-cat-sns-server#readme",
   "dependencies": {
     "connect-session-sequelize": "^6.1.1",
     "dotenv": "^8.2.0",

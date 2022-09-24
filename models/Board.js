@@ -1,55 +1,54 @@
 module.exports = function (Sequelize, DataTypes) {
+  const Board = Sequelize.define("Board", {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    description: { type: DataTypes.TEXT },
+    type: { type: DataTypes.TEXT },
+  });
 
-    const Board = Sequelize.define('Board', {
-        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-        description: { type: DataTypes.TEXT },
+  Board.associate = (models) => {
+    // 글 작성자
+    Board.belongsTo(models.User, {
+      foreignKey: "writer",
+      targetKey: "id",
     });
 
-    Board.associate = models => {
+    // 좋아요
+    Board.belongsToMany(models.User, {
+      through: {
+        model: "Like",
+        unique: false,
+      },
+      as: "like",
+      foreignKey: "board",
+      sourceKey: "id",
+      constraints: false,
+    });
 
-        // 글 작성자
-        Board.belongsTo(models.User, {
-            foreignKey: 'writer',
-            targetKey: 'id'
-        });
+    // 댓글
+    Board.hasMany(models.Reply, {
+      as: "Reply",
+      foreignKey: "board_id",
+      sourceKey: "id",
+      onDelete: "CASCADE",
+    });
 
-        // 좋아요
-        Board.belongsToMany(models.User, {
-            through: {
-                model: 'Like',
-                unique: false
-            },
-            as: 'like',
-            foreignKey: 'board',
-            sourceKey: 'id',
-            constraints: false
-        })
+    // 태그
+    Board.belongsToMany(models.Tag, {
+      through: {
+        model: "hashTag",
+        unique: false,
+      },
+      as: "hashtag",
+      foreignKey: "board",
+      sourceKey: "id",
+    });
 
-        // 댓글
-        Board.hasMany(models.Reply, {
-            as: 'Reply',
-            foreignKey: 'board_id',
-            sourceKey: 'id',
-            onDelete: 'CASCADE'
-        });
+    // 업로드 사진
+    Board.belongsTo(models.Photo, {
+      foreignKey: "photo",
+      targetKey: "id",
+    });
+  };
 
-        // 태그 
-        Board.belongsToMany(models.Tag, {
-            through:{
-                model:'hashTag',
-                unique:false
-            },
-            as:'hashtag',
-            foreignKey: 'board',
-            sourceKey: 'id'
-        })
-
-        // 업로드 사진
-        Board.belongsTo(models.Photo, {
-            foreignKey: 'photo',
-            targetKey: 'id'
-        })
-    }
-
-    return Board
-}
+  return Board;
+};

@@ -58,6 +58,15 @@ exports.get_board = async (req, res) => {
 exports.post_board = async (req, res) => {
   const description = req.body.description;
   const writer = req.body.writer;
+  const isCat = req.body.isCat;
+  const isDog = req.body.isDog;
+  let type;
+  if (isCat && !isDog) {
+    type = "CAT";
+  } else if (!isCat && isDog) {
+    type = "DOG";
+  }
+
   let tagData = [];
 
   if (description === "") {
@@ -78,7 +87,7 @@ exports.post_board = async (req, res) => {
     });
   }
 
-  const data = await models.Board.create({ writer, description, photo: req.body.photo });
+  const data = await models.Board.create({ writer, description, type, photo: req.body.photo });
 
   const result = tagData.map(async (tag) => {
     await data.addHashtag(tag);
