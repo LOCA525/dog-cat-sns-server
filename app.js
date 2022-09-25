@@ -7,6 +7,8 @@ const db = require("./models");
 const passport = require("passport");
 const session = require("express-session");
 
+const { swaggerUi, specs } = require("./modules/swagger");
+
 class App {
   constructor() {
     this.app = express();
@@ -68,6 +70,9 @@ class App {
     //passport 적용
     this.app.use(passport.initialize());
     this.app.use(passport.session());
+
+    // swagger
+    this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
   }
 
   getRouting() {
