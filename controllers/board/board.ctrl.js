@@ -57,7 +57,7 @@ exports.get_board = async (req, res) => {
 
 exports.post_board = async (req, res) => {
   const description = req.body.description;
-  const writer = req.body.writer;
+  const writer = req.params.id;
   const isCat = req.body.isCat;
   const isDog = req.body.isDog;
   let type;
@@ -65,6 +65,9 @@ exports.post_board = async (req, res) => {
     type = "CAT";
   } else if (!isCat && isDog) {
     type = "DOG";
+  } else {
+    res.send(404, "isCat,isDog 상태가 같습니다.");
+    return;
   }
 
   let tagData = [];

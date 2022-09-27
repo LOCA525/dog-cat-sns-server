@@ -99,10 +99,6 @@ const upload = require("../../middleware/multer");
  *      responses:
  *        200:
  *          description: 회원가입 성공
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/Login'
  */
 router.get("/", ctrl.get_is_login);
 
@@ -165,10 +161,6 @@ router.post("/login", passport.authenticate("local"), ctrl.post_login);
  *      responses:
  *        200:
  *          description: 로그아웃 성공
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/Login'
  */
 router.post("/logout", ctrl.post_logout);
 
