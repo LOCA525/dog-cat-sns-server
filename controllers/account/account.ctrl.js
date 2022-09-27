@@ -99,15 +99,19 @@ exports.get_follow = async (req, res) => {
       where: {
         id: req.params.id,
       },
+      attributes: ["id", "email", "username", "phone", "intro", "profile"],
       include: [
         {
           association: "Follower",
+          attributes: ["id", "email", "username", "phone", "intro", "profile"],
         },
         {
           association: "Following",
+          attributes: ["id", "email", "username", "phone", "intro", "profile"],
         },
       ],
     });
+    console.log(data);
     res.status(200).json(data);
   } catch (e) {
     console.log(e);
@@ -144,8 +148,12 @@ exports.delete_follow = async (req, res) => {
 
 exports.put_profile = async (req, res) => {
   try {
-    const user = await models.User.findByPk(req.body.userId);
+    const user = await models.User.findByPk(req.body.userId, {
+      attributes: ["id", "email", "username", "phone", "intro", "profile"],
+    });
+
     const data = await user.update({ intro: req.body.intro, profile: req.body.photo });
+
     res.json(data);
   } catch (e) {
     console.log(e);

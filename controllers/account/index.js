@@ -52,10 +52,50 @@ const upload = require("../../middleware/multer");
 
 /**
  * @swagger
+ * components:
+ *  schemas:
+ *    Follow:
+ *      type: object
+ *      required:
+ *        - from
+ *        - to
+ *      properties:
+ *        from:
+ *          type: integer
+ *          description: 유저 id
+ *        to:
+ *          type: integer
+ *          description: 팔로잉할 id
+ */
+
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    Mypage:
+ *      type: object
+ *      required:
+ *        - userId
+ *        - intro
+ *        - profile
+ *      properties:
+ *        userId:
+ *          type: number
+ *          description: 유저 id
+ *        intro:
+ *          type: string
+ *          description: 인트로
+ *        profile:
+ *          type: string
+ *          description: 프로필 사진 url
+ */
+
+/**
+ * @swagger
  *  /api/account:
  *    get:
  *      summary : 로그인 조회 api
- *      tags: [ 로그인 ]
+ *      tags: [ account ]
  *      responses:
  *        200:
  *          description: 회원가입 성공
@@ -71,7 +111,7 @@ router.get("/", ctrl.get_is_login);
  *  /api/account/join:
  *    post:
  *      summary : 회원가입 api
- *      tags: [ 회원가입 ]
+ *      tags: [ account ]
  *      requestBody:
  *        required: true
  *        content:
@@ -93,7 +133,7 @@ router.post("/join", ctrl.post_join);
  *  /api/account/login:
  *    post:
  *      summary : 로그인 api
- *      tags: [ 로그인 ]
+ *      tags: [ account ]
  *      requestBody:
  *        required: true
  *        content:
@@ -109,13 +149,123 @@ router.post("/join", ctrl.post_join);
  *                $ref: '#/components/schemas/Login'
  */
 router.post("/login", passport.authenticate("local"), ctrl.post_login);
+
+/**
+ * @swagger
+ *  /api/account/logout:
+ *    post:
+ *      summary : 로그아웃 api
+ *      tags: [ account ]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Login'
+ *      responses:
+ *        200:
+ *          description: 로그아웃 성공
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Login'
+ */
 router.post("/logout", ctrl.post_logout);
 
+/**
+ * @swagger
+ *  /api/account/follow/{id}:
+ *    get:
+ *      summary : 팔로우 상태 조회 api
+ *      tags: [ account ]
+ *      parameters:
+ *        - name: id
+ *          in: path
+ *          required: true
+ *      schema:
+ *        type: integer
+ *        format: int64
+ *      responses:
+ *        200:
+ *          description: 팔로우 상태 조회 성공
+ *    post:
+ *      summary : 팔로잉 api
+ *      tags: [ account ]
+ *      parameters:
+ *        - name: id
+ *          in: path
+ *          required: true
+ *      schema:
+ *        type: integer
+ *        format: int64
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Follow'
+ *      responses:
+ *        200:
+ *          description: 팔로잉 성공
+ *    delete:
+ *      summary : 팔로우 취소 api
+ *      tags: [ account ]
+ *      parameters:
+ *        - name: id
+ *          in: path
+ *          required: true
+ *      schema:
+ *        type: integer
+ *        format: int64
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Follow'
+ *      responses:
+ *        200:
+ *          description: 팔로잉 성공
+ *
+ */
 router.get("/follow/:id", ctrl.get_follow);
 router.post("/follow/:id", ctrl.post_follow);
 router.delete("/follow/:id", ctrl.delete_follow);
 
+/**
+ * @swagger
+ *  /api/account/mypage/{id}:
+ *    get:
+ *      summary : 마이페이지 조회 api
+ *      tags: [ account ]
+ *      parameters:
+ *        - name: id
+ *          in: path
+ *          required: true
+ *      schema:
+ *        type: integer
+ *        format: int64
+ *      responses:
+ *        200:
+ *          description: 마이페이지 조회 성공
+ */
 router.get("/mypage/:id", ctrl.get_mypage);
+/**
+ * @swagger
+ *  /api/account/mypage:
+ *    put:
+ *      summary : 마이페이지 수정 api
+ *      tags: [ account ]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Mypage'
+ *      responses:
+ *        200:
+ *          description: 마이페이지 수정 성공
+ */
 router.put("/mypage", ctrl.put_profile);
 
 module.exports = router;
