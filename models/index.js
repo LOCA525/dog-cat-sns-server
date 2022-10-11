@@ -43,7 +43,4 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-// db 모델 데이터베이스 동기화, 테이블이 없으면 테이블 생성
-db.sequelize.sync();
-
 module.exports = db;
