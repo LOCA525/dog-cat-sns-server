@@ -66,6 +66,7 @@ class App {
 
   setMiddleWare() {
     // 미들웨어 셋팅
+    this.app.use(cors(corsOption));
     this.app.use(logger('dev'));
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
@@ -76,9 +77,6 @@ class App {
 
     // swagger
     this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-
-    // cors
-    this.app.use(cors(corsOption));
   }
 
   getRouting() {
