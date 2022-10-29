@@ -105,8 +105,8 @@ exports.put_board = async (req, res) => {
   await board.update({ description: req.body.description });
 
   // 새로 입력한 태그 생성&연결
-  const newTags = req.body.addTags;
-  if (newTags.length > 0) {
+  const newTags = req.body?.addTags;
+  if (newTags && newTags.length > 0) {
     newTags.map(async (tag) => {
       await models.Tag.findOrCreate({ where: { name: tag } }).then(async (data) => {
         await board.addHashtag(data[0].id);
@@ -115,8 +115,8 @@ exports.put_board = async (req, res) => {
   }
 
   // 삭제된 태그 연결 해제
-  const removeTags = req.body.removeTags;
-  if (removeTags.length > 0) {
+  const removeTags = req.body?.removeTags;
+  if (removeTags && removeTags.length > 0) {
     removeTags.map(async (tag) => {
       await models.Tag.findOne({ where: { name: tag } }).then(async (data) => {
         await board.removeHashtag(data);

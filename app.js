@@ -1,16 +1,16 @@
-const express = require('express');
-const logger = require('morgan');
-const bodyParser = require('body-parser');
-const db = require('./models');
+const express = require("express");
+const logger = require("morgan");
+const bodyParser = require("body-parser");
+const db = require("./models");
 
 //passport 로그인 관련
-const passport = require('passport');
-const session = require('express-session');
+const passport = require("passport");
+const session = require("express-session");
 
-const { swaggerUi, specs } = require('./modules/swagger');
+const { swaggerUi, specs } = require("./modules/swagger");
 
-const cors = require('cors');
-const corsOption = require('./middleware/corsOption');
+const cors = require("cors");
+const corsOption = require("./middleware/corsOption");
 
 class App {
   constructor() {
@@ -34,23 +34,23 @@ class App {
     db.sequelize
       .authenticate()
       .then(() => {
-        console.log('Connection has been established successfully.');
+        console.log("Connection has been established successfully.");
       })
       .then(() => {
-        console.log('DB Sync complete.');
+        console.log("DB Sync complete.");
         // return db.sequelize.sync();
         // return db.sequelize.drop();
       })
-      .catch(err => {
-        console.error('Unable to connect to the database:', err);
+      .catch((err) => {
+        console.error("Unable to connect to the database:", err);
       });
   }
 
   setSession() {
-    const SequelizeStore = require('connect-session-sequelize')(session.Store);
+    const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
     this.app.sessionMiddleWare = session({
-      secret: 'fwafwakln21@$!*!@%',
+      secret: "fwafwakln21@$!*!@%",
       resave: false,
       saveUninitialized: true,
       cookie: {
@@ -67,7 +67,7 @@ class App {
   setMiddleWare() {
     // 미들웨어 셋팅
     this.app.use(cors(corsOption));
-    this.app.use(logger('dev'));
+    this.app.use(logger("dev"));
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -76,11 +76,11 @@ class App {
     this.app.use(passport.session());
 
     // swagger
-    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+    this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
   }
 
   getRouting() {
-    this.app.use(require('./controllers'));
+    this.app.use(require("./controllers"));
   }
 }
 
