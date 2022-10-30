@@ -247,5 +247,6 @@ router.post("/:id/comment", ctrl.post_comment);
 
 router.get("/explore", ctrl.get_search);
 router.get("/explore/tag", ctrl.get_searchTag);
+router.get("/explore/user", ctrl.get_searchUser);
 
 module.exports = router;

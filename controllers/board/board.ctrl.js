@@ -278,3 +278,26 @@ exports.get_searchTag = async (req, res) => {
     res.send(404);
   }
 };
+
+exports.get_searchUser = async (req, res) => {
+  try {
+    if (req.query.name === "") return;
+    const keyword = req.query.name;
+
+    const user = await models.User.findAll({
+      where: {
+        name: {
+          [models.Sequelize.Op.like]: "%" + keyword + "%",
+        },
+      },
+    });
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(200).json([]);
+    }
+  } catch (e) {
+    console.log(e);
+    res.send(404);
+  }
+};
