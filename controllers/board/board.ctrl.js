@@ -31,7 +31,6 @@ exports.get_boards = (req, res) => {
     }
   });
 };
-
 exports.get_board = async (req, res) => {
   const response = await models.Board.findOne({
     where: { id: req.params.id },
