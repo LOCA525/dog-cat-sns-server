@@ -9,7 +9,15 @@ exports.get_boards = (req, res) => {
       {
         model: models.User,
         foreignKey: "writer",
-        attributes: { exclude: ["password"] },
+        attributes: { exclude: ["password", "profile"] },
+        include: [
+          {
+            model: models.Photo,
+            association: "Profile",
+            targetKey: "id",
+            attributes: ["url"],
+          },
+        ],
       },
       {
         association: "like",
@@ -42,7 +50,15 @@ exports.get_board = async (req, res) => {
       {
         model: models.User,
         foreignKey: "writer",
-        attributes: { exclude: ["password"] },
+        attributes: { exclude: ["password", "profile"] },
+        include: [
+          {
+            model: models.Photo,
+            association: "Profile",
+            targetKey: "id",
+            attributes: ["url"],
+          },
+        ],
       },
       {
         association: "like",
