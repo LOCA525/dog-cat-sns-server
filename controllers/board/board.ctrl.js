@@ -237,6 +237,20 @@ exports.post_comment = async (req, res) => {
   }
 };
 
+exports.del_comment = async (req, res) => {
+  try {
+    const reply = await models.Reply.destroy({
+      where: {
+        id: req.params.id,
+      },
+    }).then(() => {
+      res.send(200);
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 exports.get_search = async (req, res) => {
   try {
     if (req.query.name === "") {
@@ -297,12 +311,13 @@ exports.get_searchTag = async (req, res) => {
 
 exports.get_searchUser = async (req, res) => {
   try {
+    console.log("req.query.name", req.query.name);
     if (req.query.name === "") return;
     const keyword = req.query.name;
 
     const user = await models.User.findAll({
       where: {
-        name: {
+        username: {
           [models.Sequelize.Op.like]: "%" + keyword + "%",
         },
       },

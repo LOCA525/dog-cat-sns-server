@@ -88,6 +88,9 @@ const upload = require("../../middleware/multer");
  *        profile:
  *          type: string
  *          description: 프로필 사진 url
+ *        username:
+ *          type: string
+ *          description: 유저네임
  */
 
 /**

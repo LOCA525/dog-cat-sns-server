@@ -152,7 +152,7 @@ exports.put_profile = async (req, res) => {
       attributes: ["id", "email", "username", "phone", "intro", "profile"],
     });
 
-    const data = await user.update({ intro: req.body.intro, profile: req.body.photo });
+    const data = await user.update({ intro: req.body.intro, profile: req.body.photo, username: req.body.username });
 
     res.json(data);
   } catch (e) {

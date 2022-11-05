@@ -241,12 +241,53 @@ router.delete("/like", ctrl.delete_like);
  *      responses:
  *        200:
  *          description: 댓글 작성 성공
+ *    delete:
+ *      summary : 댓글 삭제 api
+ *      tags: [ board ]
+ *      parameters:
+ *        - name: id
+ *          in: path
+ *          required: true
+ *      responses:
+ *        200:
+ *          description: 댓글 삭제 성공
  */
 router.get("/:id/comment", ctrl.get_comment);
 router.post("/:id/comment", ctrl.post_comment);
+router.delete("/:id/comment", ctrl.del_comment);
 
 router.get("/explore", ctrl.get_search);
+
+/**
+ * @swagger
+ *  /api/board/explore/tag:
+ *    get:
+ *      summary : 태그 조회 api
+ *      tags: [ search ]
+ *      parameters:
+ *        - name: name
+ *          in: query
+ *          required: true
+ *      responses:
+ *        200:
+ *          description: 태그 조회 성공
+ */
 router.get("/explore/tag", ctrl.get_searchTag);
+
+/**
+ * @swagger
+ *  /api/board/explore/user:
+ *    get:
+ *      summary : username 조회 api
+ *      tags: [ search ]
+ *      parameters:
+ *        - name: name
+ *          in: query
+ *          required: true
+ *      responses:
+ *        200:
+ *          description: username 조회 성공
+ */
 router.get("/explore/user", ctrl.get_searchUser);
 
 module.exports = router;
