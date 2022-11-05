@@ -1,8 +1,11 @@
 const models = require("../../models");
 const sequelize = require("sequelize");
 // 로그인 조회
-exports.get_is_login = (req, res) => {
+exports.get_is_login = async (req, res) => {
   if (req.user) {
+    const photo = await models.Photo.findByPk(req.user.profile);
+
+    req.user.profile = photo;
     res.status(200).json(req.user.dataValues);
   } else {
     res.status(404).send("로그인 중이 아닙니다");
