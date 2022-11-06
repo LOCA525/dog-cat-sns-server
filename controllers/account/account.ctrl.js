@@ -78,7 +78,7 @@ exports.get_mypage = async (req, res) => {
           model: models.Photo,
           association: "Profile",
           targetKey: "id",
-          attributes: ["url"],
+          attributes: ["url", "id"],
         },
       ],
     });
