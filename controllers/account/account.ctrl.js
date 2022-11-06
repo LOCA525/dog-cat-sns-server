@@ -155,7 +155,11 @@ exports.put_profile = async (req, res) => {
       attributes: ["id", "email", "username", "phone", "intro", "profile"],
     });
 
-    const data = await user.update({ intro: req.body.intro, profile: req.body.photo, username: req.body.username });
+    const data = await user.update({
+      intro: req.body.intro ?? user.intro,
+      profile: req.body.photo ?? user.profile,
+      username: req.body.username ?? user.username,
+    });
 
     res.json(data);
   } catch (e) {
