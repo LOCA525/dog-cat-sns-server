@@ -48,6 +48,11 @@ exports.get_board = async (req, res) => {
         attributes: ["id", "name"],
       },
       {
+        model: models.Photo,
+        foreignKey: "photo",
+        attributes: ["filter", "url"],
+      },
+      {
         model: models.User,
         foreignKey: "writer",
         attributes: { exclude: ["password", "profile"] },
