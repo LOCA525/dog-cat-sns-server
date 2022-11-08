@@ -19,7 +19,7 @@ exports.post_join = (req, res) => {
     res.status(400).send("입력을 제대로 하지 않았습니다.");
     return;
   }
-  console.log("--- req", req);
+
   // 유저 생성 함수 (아래에서 호출)
   const createUser = () => {
     models.User.create(req.body).then(() => {

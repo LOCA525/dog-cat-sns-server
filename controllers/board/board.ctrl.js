@@ -28,6 +28,11 @@ exports.get_boards = (req, res) => {
         attributes: ["id", "name"],
       },
       {
+        model: models.Reply,
+        as: "Reply",
+        attributes: ["id"],
+      },
+      {
         model: models.Photo,
         foreignKey: "photo",
         attributes: ["filter", "url"],
@@ -221,8 +226,17 @@ exports.get_comment = async (req, res) => {
         board_id: req.params.id,
       },
       include: {
-        association: "User",
-        attributes: ["username"],
+        model: models.User,
+        foreignKey: "write",
+        attributes: { exclude: ["password", "createdAt", "phone", "intro", "updatedAt", "profile", "email"] },
+        include: [
+          {
+            model: models.Photo,
+            association: "Profile",
+            targetKey: "id",
+            attributes: ["url"],
+          },
+        ],
       },
     });
     // res.send(200, Board);
