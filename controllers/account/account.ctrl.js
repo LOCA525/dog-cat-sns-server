@@ -107,16 +107,22 @@ exports.get_follow = async (req, res) => {
         {
           association: "Follower",
           attributes: ["id", "email", "username", "phone", "intro", "profile"],
+          include: {
+            model: models.Photo,
+            association: "Profile",
+            targetKey: "id",
+            attributes: ["url", "id"],
+          },
         },
         {
           association: "Following",
           attributes: ["id", "email", "username", "phone", "intro", "profile"],
-        },
-        {
-          model: models.Photo,
-          association: "Profile",
-          targetKey: "id",
-          attributes: ["url", "id"],
+          include: {
+            model: models.Photo,
+            association: "Profile",
+            targetKey: "id",
+            attributes: ["url", "id"],
+          },
         },
       ],
     });
